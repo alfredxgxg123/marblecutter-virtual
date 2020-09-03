@@ -1,3 +1,4 @@
+uWSGI==2.0.19.1
 cachetools ~= 2.0.0
 flask-cors
 # marblecutter[web] ~= 0.3.1
@@ -7,4 +8,4 @@ numpy
 serverless-wsgi
 # temporary workaround for https://github.com/mapbox/rasterio/issues/1651
 mock
-uWSGI==2.0.19.1
+
