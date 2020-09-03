@@ -1,4 +1,4 @@
-FROM quay.io/mojodna/gdal
+FROM osgeo/gdal
 LABEL maintainer="Seth Fitzsimmons <seth@mojodna.net>"
 
 ARG http_proxy
@@ -23,9 +23,10 @@ RUN apt-get update \
     ca-certificates \
     cython \
     git \
-    python-pip \
-    python-wheel \
-    python-setuptools \
+    python3-pip \
+    python3-wheel \
+    python3-setuptools \
+    libpython3.*-dev\
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
@@ -34,12 +35,15 @@ WORKDIR /opt/marblecutter
 COPY requirements-server.txt /opt/marblecutter/
 COPY requirements.txt /opt/marblecutter/
 
-RUN pip install -U numpy && \
-  pip install -r requirements-server.txt && \
+
+RUN pip3 install -U numpy && \
+    #pip3 install uwsgi &&\
+  pip3 install -r requirements-server.txt && \
   rm -rf /root/.cache
 
 COPY virtual /opt/marblecutter/virtual
 
-USER nobody
+#USER nobody
+CMD [ "uwsgi", "marblecutter.ini" ]
+#ENTRYPOINT ["gunicorn", "-k", "gevent", "-b", "0.0.0.0", "--access-logfile", "-", "virtual.web:app"]
 
-ENTRYPOINT ["gunicorn", "-k", "gevent", "-b", "0.0.0.0", "--access-logfile", "-", "virtual.web:app"]
