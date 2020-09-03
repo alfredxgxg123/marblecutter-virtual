@@ -1,5 +1,5 @@
-uWSGI==2.0.19.1
 cachetools ~= 2.0.0
+uWSGI==2.0.19.1
 flask-cors
 # marblecutter[web] ~= 0.3.1
 https://github.com/mojodna/marblecutter/archive/5b9040b.tar.gz#egg=marblecutter[web]
