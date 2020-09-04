@@ -2,7 +2,6 @@ FROM osgeo/gdal
 LABEL maintainer="Seth Fitzsimmons <seth@mojodna.net>"
 
 ARG http_proxy
-
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
 ENV GDAL_CACHEMAX 512
@@ -41,9 +40,10 @@ RUN pip3 install -U numpy && \
   pip3 install -r requirements-server.txt && \
   rm -rf /root/.cache
 
-COPY virtual /opt/marblecutter/virtual
+COPY . /opt/marblecutter/
+
 
 #USER nobody
-CMD [ "uwsgi", "marblecutter.ini" ]
+CMD [ "uwsgi", "/opt/marblecutter/marblecutter.ini" ]
 #ENTRYPOINT ["gunicorn", "-k", "gevent", "-b", "0.0.0.0", "--access-logfile", "-", "virtual.web:app"]
 
